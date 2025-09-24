@@ -1,2 +1,2 @@
-all:
-	@echo 'Run module make targets here'
+notebook:
+	uv run jupyter notebook
