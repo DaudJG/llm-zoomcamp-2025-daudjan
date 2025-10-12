@@ -4,7 +4,7 @@ import requests
 import json
 
 DATA_URL: str = "https://github.com/alexeygrigorev/llm-rag-workshop/raw/main/notebooks/documents.json"
-DATA_PATH: Path = Path("01-intro-rag/data/documents.json")
+DATA_PATH = Path(__file__).resolve().parent / "data" / "documents.json"
 
 
 def download_data(url: str = DATA_URL, save_path: Path = DATA_PATH) -> None:
@@ -26,6 +26,13 @@ def download_data(url: str = DATA_URL, save_path: Path = DATA_PATH) -> None:
 
     docs: List[Dict[str, Any]] = response.json()
     save_path.write_text(json.dumps(docs, indent=2), encoding="utf-8")
+    """
+    # .write_text() is a method on a Path object that hides the file-handling ceremony
+    # it is a short hand for:
+        with open(save_path, "w", encoding="utf-8") as f:
+             f.write(json.dumps(docs, indent=2))
+    """
+
 
     print(f"Saved {len(docs)} items to {save_path.resolve()}")
 
