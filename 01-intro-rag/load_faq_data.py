@@ -21,6 +21,12 @@ def download_data(url: str = DATA_URL, save_path: Path = DATA_PATH) -> None:
     """
     save_path.parent.mkdir(parents=True, exist_ok=True)
 
+    if save_path.exists():
+        print(f"Data already exists at {save_path.resolve()}")
+        return
+    
+    print(f"Downloading data from {url} ...")
+
     response: requests.Response = requests.get(url)
     response.raise_for_status()
 
@@ -32,10 +38,7 @@ def download_data(url: str = DATA_URL, save_path: Path = DATA_PATH) -> None:
         with open(save_path, "w", encoding="utf-8") as f:
              f.write(json.dumps(docs, indent=2))
     """
-
-
     print(f"Saved {len(docs)} items to {save_path.resolve()}")
 
-
 if __name__ == "__main__":
-    download_data()
+      download_data()
